@@ -20,25 +20,25 @@ import java.util.ArrayList;
 
 import static android.content.Context.ALARM_SERVICE;
 
-class ProductAdapter extends ArrayAdapter<Product> {
+class AlarmAdapter extends ArrayAdapter<Alarm> {
     private Context mContext;
     private LayoutInflater inflater;
     private int layout;
-    private ArrayList<Product> productList;
-    private ProductAdapter adapter = this;
+    private ArrayList<Alarm> alarmList;
+    private AlarmAdapter adapter = this;
     Intent intent;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
-    private Product product;
+    private Alarm alarm;
     long timeInAdapter;
     int cbResInAdapter;
     boolean onOrOffResInAdapter;
 
 
-    ProductAdapter(Context context, int resource, ArrayList<Product> products) {
-        super(context, resource, products);
+    AlarmAdapter(Context context, int resource, ArrayList<Alarm> alarms) {
+        super(context, resource, alarms);
         mContext = context;
-        this.productList = products;
+        this.alarmList = alarms;
         this.layout = resource;
         this.inflater = LayoutInflater.from(context);
     }
@@ -52,10 +52,10 @@ class ProductAdapter extends ArrayAdapter<Product> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        product = productList.get(position);
-        viewHolder.timeView.setText(product.getName());
+        alarm = alarmList.get(position);
+        viewHolder.timeView.setText(alarm.getName());
 
-        cbResInAdapter = Integer.valueOf(formatValue(product.getCheckBoxRes()));
+        cbResInAdapter = Integer.valueOf(formatValue(alarm.getCheckBoxRes()));
         switch (cbResInAdapter) {
             case 1:
                 viewHolder.textView.setText(R.string.common);
@@ -68,16 +68,16 @@ class ProductAdapter extends ArrayAdapter<Product> {
                 break;
         }
 
-        onOrOffResInAdapter = productList.get(position).isOnOrOff();
+        onOrOffResInAdapter = alarmList.get(position).isOnOrOff();
         if (onOrOffResInAdapter) {
             viewHolder.switchButton.setChecked(true);
 
-            timeInAdapter = product.getTimeInMillis();
-            if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 1)
+            timeInAdapter = alarm.getTimeInMillis();
+            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 1)
                 intent = new Intent(mContext, AlarmReceiver.class);
-            if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 2)
+            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 2)
                 intent = new Intent(mContext, AlarmTaskReceiver.class);
-            if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 3)
+            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 3)
                 intent = new Intent(mContext, AlarmSpeechToTextReceiver.class);
 
             if (timeInAdapter <= System.currentTimeMillis()) {
@@ -87,7 +87,7 @@ class ProductAdapter extends ArrayAdapter<Product> {
             pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInAdapter, pendingIntent);
 
-            product.setOnOrOff(true);
+            alarm.setOnOrOff(true);
         } else {
             viewHolder.switchButton.setChecked(false);
         }
@@ -109,11 +109,11 @@ class ProductAdapter extends ArrayAdapter<Product> {
                                 alarmManager.cancel(pendingIntent);
 
                             //Работы с переменными для ограничения
-                            int cbDeleteLimitPerem = Integer.valueOf(formatValue(product.getCheckBoxRes()));
+                            int cbDeleteLimitPerem = Integer.valueOf(formatValue(alarm.getCheckBoxRes()));
                             if (cbDeleteLimitPerem == 1) MainActivity.cbLimitCommon--;
                             if (cbDeleteLimitPerem == 2) MainActivity.cbLimitWithTask--;
                             if (cbDeleteLimitPerem == 3) MainActivity.cbLimitSpeechToText--;
-                            productList.remove(position);
+                            alarmList.remove(position);
                             adapter.notifyDataSetChanged();
                             break;
                     }
@@ -126,24 +126,24 @@ class ProductAdapter extends ArrayAdapter<Product> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    productList.get(position).setOnOrOff(true);
+                    alarmList.get(position).setOnOrOff(true);
 
-                    timeInAdapter = product.getTimeInMillis();
-                    if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 1)
+                    timeInAdapter = alarm.getTimeInMillis();
+                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 1)
                         intent = new Intent(mContext, AlarmReceiver.class);
-                    if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 2)
+                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 2)
                         intent = new Intent(mContext, AlarmTaskReceiver.class);
-                    if (Integer.valueOf(formatValue(product.getCheckBoxRes())) == 3)
+                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 3)
                         intent = new Intent(mContext, AlarmSpeechToTextReceiver.class);
 
                     alarmManager = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
                     pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, productList.get(position).getTimeInMillis(), pendingIntent);
-                    product.setOnOrOff(true);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmList.get(position).getTimeInMillis(), pendingIntent);
+                    alarm.setOnOrOff(true);
 
                 } else {
                     alarmManager.cancel(pendingIntent);
-                    productList.get(position).setOnOrOff(false);
+                    alarmList.get(position).setOnOrOff(false);
                 }
             }
         });

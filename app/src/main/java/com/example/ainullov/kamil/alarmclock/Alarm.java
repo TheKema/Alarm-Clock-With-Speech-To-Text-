@@ -1,12 +1,12 @@
 package com.example.ainullov.kamil.alarmclock;
 
-public class Product{
+public class Alarm {
     private String name;
     private int checkBoxRes;
     private boolean onOrOff;
     private long timeInMillis;
 
-    Product(String name, long timeInMillis, int checkBoxRes, boolean onOrOff){
+    Alarm(String name, long timeInMillis, int checkBoxRes, boolean onOrOff){
         this.name = name;
         this.timeInMillis = timeInMillis;
         this.checkBoxRes = checkBoxRes;

@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView textViewTime;
     Button btnAdd;
     String currentTimeString;
-    ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Alarm> alarms = new ArrayList<>();
     Intent intentAddAlarmClock;
     ListView productList;
-    ProductAdapter adapter;
+    AlarmAdapter adapter;
     long time;
     int cbCheckResultRes;
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         t.start();
         productList = (ListView) findViewById(R.id.timeList);
         load();
-        adapter = new ProductAdapter(this, R.layout.list_item, products);
+        adapter = new AlarmAdapter(this, R.layout.list_item, alarms);
         productList.setAdapter(adapter);
     }
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnAdd:
-                if (products.size() == 5) {
+                if (alarms.size() == 5) {
                     Toast.makeText(this, "At the moment there are not more than 5 alarm clocks", Toast.LENGTH_SHORT).show();
                 } else {
                     intentAddAlarmClock = new Intent(this, CreateAlarmClock.class);
@@ -121,23 +121,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
             else {
                 cbLimitCommon++;
-                products.add(new Product(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
             }}
         if (cbCheckResultRes == 2) {
             if (cbLimitWithTask > 0)
                 Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
             else{
                 cbLimitWithTask++;
-                products.add(new Product(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
         }}
         if (cbCheckResultRes == 3) {
             if (cbLimitSpeechToText > 0)
                 Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
             else{
                 cbLimitSpeechToText++;
-                products.add(new Product(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
         }}
-        //        products.add(new Product(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+        //        alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
         adapter.notifyDataSetChanged();
     }
 
@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cbLimitSpeechToText = shref.getInt("cbLimitSpeechToText", cbLimitSpeechToText);
             String response = shref.getString(key, "");
             // Боги, я нашел это https://stackoverflow.com/questions/14981233/android-arraylist-of-custom-objects-save-to-sharedpreferences-serializable/40237149#40237149
-            products = gson.fromJson(response,
-                    new TypeToken<List<Product>>() {
+            alarms = gson.fromJson(response,
+                    new TypeToken<List<Alarm>>() {
                     }.getType());
         }
     }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void save() {
         shref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor;
-        String json = gson.toJson(products);
+        String json = gson.toJson(alarms);
         editor = shref.edit();
         editor.remove(key).commit();
         editor.putString(key, json);
