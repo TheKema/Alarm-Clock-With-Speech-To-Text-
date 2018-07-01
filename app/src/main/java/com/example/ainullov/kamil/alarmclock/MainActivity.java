@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Gson gson = new Gson();
     boolean onOffRes = false;
 
-    //Переменные для ограничения
-   public static int cbLimitCommon = 0;
-   public static int cbLimitWithTask = 0;
-   public static int cbLimitSpeechToText = 0;
+//    //Переменные для ограничения
+//   public static int cbLimitCommon = 0;
+//   public static int cbLimitWithTask = 0;
+//   public static int cbLimitSpeechToText = 0;
 
 
     @Override
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnAdd:
                 if (alarms.size() == 5) {
-                    Toast.makeText(this, "At the moment there are not more than 5 alarm clocks", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "You can't create more than 5 alarm clocks", Toast.LENGTH_SHORT).show();
                 } else {
                     intentAddAlarmClock = new Intent(this, CreateAlarmClock.class);
                     startActivityForResult(intentAddAlarmClock, 1);
@@ -114,30 +114,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         time = data.getLongExtra("time", time);
         cbCheckResultRes = data.getIntExtra("cbCheckResult", cbCheckResultRes);
 
-        //Ограничение
-        if (cbCheckResultRes == 1) {
-
-            if (cbLimitCommon > 0)
-                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
-            else {
-                cbLimitCommon++;
+//        //Ограничение
+//        if (cbCheckResultRes == 1) {
+//
+//            if (cbLimitCommon > 0)
+//                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
+//            else {
+//                cbLimitCommon++;
+//                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+//            }}
+//        if (cbCheckResultRes == 2) {
+//            if (cbLimitWithTask > 0)
+//                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
+//            else{
+//                cbLimitWithTask++;
+//                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+//        }}
+//        if (cbCheckResultRes == 3) {
+//            if (cbLimitSpeechToText > 0)
+//                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
+//            else{
+//                cbLimitSpeechToText++;
+//                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+//        }}
                 alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
-            }}
-        if (cbCheckResultRes == 2) {
-            if (cbLimitWithTask > 0)
-                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
-            else{
-                cbLimitWithTask++;
-                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
-        }}
-        if (cbCheckResultRes == 3) {
-            if (cbLimitSpeechToText > 0)
-                Toast.makeText(this, "You use a limited version, so you can't create more than one alarm of each type", Toast.LENGTH_LONG).show();
-            else{
-                cbLimitSpeechToText++;
-                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
-        }}
-        //        alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
         adapter.notifyDataSetChanged();
     }
 
@@ -153,9 +153,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             numberOfMusicName = shref.getInt("numberOfMusicName", numberOfMusicName);
             //Переменные для ограничения
-            cbLimitCommon = shref.getInt("cbLimitCommon", cbLimitCommon);
-            cbLimitWithTask = shref.getInt("cbLimitWithTask", cbLimitWithTask);
-            cbLimitSpeechToText = shref.getInt("cbLimitSpeechToText", cbLimitSpeechToText);
+//            cbLimitCommon = shref.getInt("cbLimitCommon", cbLimitCommon);
+//            cbLimitWithTask = shref.getInt("cbLimitWithTask", cbLimitWithTask);
+//            cbLimitSpeechToText = shref.getInt("cbLimitSpeechToText", cbLimitSpeechToText);
             String response = shref.getString(key, "");
             // Боги, я нашел это https://stackoverflow.com/questions/14981233/android-arraylist-of-custom-objects-save-to-sharedpreferences-serializable/40237149#40237149
             alarms = gson.fromJson(response,
@@ -173,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString(key, json);
         //Ограничение
         editor.putInt("numberOfMusicName", numberOfMusicName);
-        editor.putInt("cbLimitCommon", cbLimitCommon);
-        editor.putInt("cbLimitWithTask", cbLimitWithTask);
-        editor.putInt("cbLimitSpeechToText", cbLimitSpeechToText);
+//        editor.putInt("cbLimitCommon", cbLimitCommon);
+//        editor.putInt("cbLimitWithTask", cbLimitWithTask);
+//        editor.putInt("cbLimitSpeechToText", cbLimitSpeechToText);
         editor.commit();
     }
 }

@@ -73,18 +73,18 @@ class AlarmAdapter extends ArrayAdapter<Alarm> {
             viewHolder.switchButton.setChecked(true);
 
             timeInAdapter = alarm.getTimeInMillis();
-            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 1)
+            if (Integer.valueOf(formatValue(alarmList.get(position).getCheckBoxRes())) == 1)
                 intent = new Intent(mContext, AlarmReceiver.class);
-            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 2)
+            if (Integer.valueOf(formatValue(alarmList.get(position).getCheckBoxRes())) == 2)
                 intent = new Intent(mContext, AlarmTaskReceiver.class);
-            if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 3)
+            if (Integer.valueOf(formatValue(alarmList.get(position).getCheckBoxRes())) == 3)
                 intent = new Intent(mContext, AlarmSpeechToTextReceiver.class);
 
             if (timeInAdapter <= System.currentTimeMillis()) {
                 timeInAdapter = timeInAdapter + AlarmManager.INTERVAL_DAY;
             }
             alarmManager = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
-            pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+            pendingIntent = PendingIntent.getBroadcast(mContext, position, intent, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInAdapter, pendingIntent);
 
             alarm.setOnOrOff(true);
@@ -107,12 +107,12 @@ class AlarmAdapter extends ArrayAdapter<Alarm> {
                             //Проверка на включенный свитч, иначе вылетает
                             if (viewHolder.switchButton.isChecked())
                                 alarmManager.cancel(pendingIntent);
-
-                            //Работы с переменными для ограничения
-                            int cbDeleteLimitPerem = Integer.valueOf(formatValue(alarm.getCheckBoxRes()));
-                            if (cbDeleteLimitPerem == 1) MainActivity.cbLimitCommon--;
-                            if (cbDeleteLimitPerem == 2) MainActivity.cbLimitWithTask--;
-                            if (cbDeleteLimitPerem == 3) MainActivity.cbLimitSpeechToText--;
+//
+//                            //Работы с переменными для ограничения
+//                            int cbDeleteLimitPerem = Integer.valueOf(formatValue(alarm.getCheckBoxRes()));
+//                            if (cbDeleteLimitPerem == 1) MainActivity.cbLimitCommon--;
+//                            if (cbDeleteLimitPerem == 2) MainActivity.cbLimitWithTask--;
+//                            if (cbDeleteLimitPerem == 3) MainActivity.cbLimitSpeechToText--;
                             alarmList.remove(position);
                             adapter.notifyDataSetChanged();
                             break;
@@ -129,15 +129,15 @@ class AlarmAdapter extends ArrayAdapter<Alarm> {
                     alarmList.get(position).setOnOrOff(true);
 
                     timeInAdapter = alarm.getTimeInMillis();
-                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 1)
+                    if (Integer.valueOf(formatValue( alarmList.get(position).getCheckBoxRes())) == 1)
                         intent = new Intent(mContext, AlarmReceiver.class);
-                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 2)
+                    if (Integer.valueOf(formatValue( alarmList.get(position).getCheckBoxRes())) == 2)
                         intent = new Intent(mContext, AlarmTaskReceiver.class);
-                    if (Integer.valueOf(formatValue(alarm.getCheckBoxRes())) == 3)
+                    if (Integer.valueOf(formatValue( alarmList.get(position).getCheckBoxRes())) == 3)
                         intent = new Intent(mContext, AlarmSpeechToTextReceiver.class);
 
                     alarmManager = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
-                    pendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+                    pendingIntent = PendingIntent.getBroadcast(mContext, position, intent, 0);
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmList.get(position).getTimeInMillis(), pendingIntent);
                     alarm.setOnOrOff(true);
 
