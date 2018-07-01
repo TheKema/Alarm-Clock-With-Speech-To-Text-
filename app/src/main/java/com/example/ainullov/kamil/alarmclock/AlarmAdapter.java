@@ -108,11 +108,6 @@ class AlarmAdapter extends ArrayAdapter<Alarm> {
                             if (viewHolder.switchButton.isChecked())
                                 alarmManager.cancel(pendingIntent);
 //
-//                            //Работы с переменными для ограничения
-//                            int cbDeleteLimitPerem = Integer.valueOf(formatValue(alarm.getCheckBoxRes()));
-//                            if (cbDeleteLimitPerem == 1) MainActivity.cbLimitCommon--;
-//                            if (cbDeleteLimitPerem == 2) MainActivity.cbLimitWithTask--;
-//                            if (cbDeleteLimitPerem == 3) MainActivity.cbLimitSpeechToText--;
                             alarmList.remove(position);
                             adapter.notifyDataSetChanged();
                             break;
