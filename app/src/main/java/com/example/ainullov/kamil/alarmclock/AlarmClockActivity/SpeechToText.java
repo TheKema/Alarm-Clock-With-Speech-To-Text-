@@ -1,4 +1,4 @@
-package com.example.ainullov.kamil.alarmclock;
+package com.example.ainullov.kamil.alarmclock.AlarmClockActivity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.ainullov.kamil.alarmclock.R;
+import com.example.ainullov.kamil.alarmclock.RingtonePlayingService;
 
 import java.util.ArrayList;
 import java.util.Locale;

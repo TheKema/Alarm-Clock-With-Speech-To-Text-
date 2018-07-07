@@ -1,4 +1,4 @@
-package com.example.ainullov.kamil.alarmclock;
+package com.example.ainullov.kamil.alarmclock.AlarmClockActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.ainullov.kamil.alarmclock.R;
+import com.example.ainullov.kamil.alarmclock.RingtonePlayingService;
 
 import java.util.Random;
 

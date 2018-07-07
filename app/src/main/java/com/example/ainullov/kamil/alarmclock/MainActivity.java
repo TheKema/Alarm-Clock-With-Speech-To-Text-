@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Gson gson = new Gson();
     boolean onOffRes = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnAdd:
                 if (alarms.size() == 5) {
-                    Toast.makeText(this, "You can't create more than 5 alarm clocks", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "At the moment there are not more than 5 alarm clocks", Toast.LENGTH_SHORT).show();
                 } else {
                     intentAddAlarmClock = new Intent(this, CreateAlarmClock.class);
                     startActivityForResult(intentAddAlarmClock, 1);
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,9 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         numberOfMusicName = data.getIntExtra("numberOfMusicName", numberOfMusicName);
 
         time = data.getLongExtra("time", time);
-        cbCheckResultRes = data.getIntExtra("cbCheckResult", cbCheckResultRes);
-
-                alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
+        cbCheckResultRes = data.getIntExtra("cbCheckResult", cbCheckResultRes);  alarms.add(new Alarm(DateUtils.formatDateTime(this, time, DateUtils.FORMAT_SHOW_TIME), time, cbCheckResultRes, onOffRes));
         adapter.notifyDataSetChanged();
     }
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             numberOfMusicName = shref.getInt("numberOfMusicName", numberOfMusicName);
             String response = shref.getString(key, "");
-           alarms = gson.fromJson(response,
+            alarms = gson.fromJson(response,
                     new TypeToken<List<Alarm>>() {
                     }.getType());
         }
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor = shref.edit();
         editor.remove(key).commit();
         editor.putString(key, json);
-        //Ограничение
         editor.putInt("numberOfMusicName", numberOfMusicName);
         editor.commit();
     }

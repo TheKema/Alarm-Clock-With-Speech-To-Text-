@@ -24,22 +24,22 @@
             android:name=".CreateAlarmClock"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".AlarmReceiver" />
-        <receiver android:name=".AlarmTaskReceiver" />
-        <receiver android:name=".AlarmSpeechToTextReceiver" />
+        <receiver android:name=".Receiver.AlarmReceiver" />
+        <receiver android:name=".Receiver.AlarmTaskReceiver" />
+        <receiver android:name=".Receiver.AlarmSpeechToTextReceiver" />
 
         <service
             android:name=".RingtonePlayingService"
             android:enabled="true" />
 
         <activity
-            android:name=".SpeechToText"
+            android:name=".AlarmClockActivity.SpeechToText"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TaskAlarmClock"
+            android:name=".AlarmClockActivity.TaskAlarmClock"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CommonAlarmClock"
+            android:name=".AlarmClockActivity.CommonAlarmClock"
             android:screenOrientation="portrait" />
     </application>
 

@@ -132,7 +132,6 @@ public class CreateAlarmClock extends AppCompatActivity implements View.OnClickL
                 if (cbTaskSpeech.isChecked())
                     cbCheckResult = 3;
                 intent.putExtra("cbCheckResult", cbCheckResult);
-//                intent.putExtra("switchResult", switchResult);
                 intent.putExtra("numberOfMusicName", numberOfMusicName);
                 setResult(RESULT_OK, intent);
                 finish();

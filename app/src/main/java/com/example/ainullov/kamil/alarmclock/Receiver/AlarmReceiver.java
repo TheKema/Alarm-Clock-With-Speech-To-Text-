@@ -1,9 +1,11 @@
-package com.example.ainullov.kamil.alarmclock;
+package com.example.ainullov.kamil.alarmclock.Receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+
+import com.example.ainullov.kamil.alarmclock.AlarmClockActivity.CommonAlarmClock;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

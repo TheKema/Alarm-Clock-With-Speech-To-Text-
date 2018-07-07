@@ -16,6 +16,10 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.ainullov.kamil.alarmclock.Receiver.AlarmReceiver;
+import com.example.ainullov.kamil.alarmclock.Receiver.AlarmSpeechToTextReceiver;
+import com.example.ainullov.kamil.alarmclock.Receiver.AlarmTaskReceiver;
+
 import java.util.ArrayList;
 
 import static android.content.Context.ALARM_SERVICE;
@@ -104,7 +108,7 @@ class AlarmAdapter extends ArrayAdapter<Alarm> {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case 1:
-                            //Проверка на включенный свитч, иначе вылетает
+                            //Проверка на включенный свитч
                             if (viewHolder.switchButton.isChecked())
                                 alarmManager.cancel(pendingIntent);
 //
